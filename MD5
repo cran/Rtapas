@@ -1,4 +1,4 @@
-74bd16607b6ed4637d3d8a21a280c8fb *DESCRIPTION
+0d662c12f1b1eaa219a8c968961a29a1 *DESCRIPTION
 f18764056fc4b3e792566c6fcfd32f87 *LICENSE
 224f9a9ec6a2be41d9b22ac8a3d6038c *NAMESPACE
 8f37263d697fa3ad9f0a1b6c617c5ffc *R/amph_trem.R
@@ -13,7 +13,7 @@ e09cdbad1c8fb57636c09dc947deefd1 *R/max_cong.R
 11b731831f9602d2e061375197d8c167 *R/one2one_f.R
 64728de8fe5513e7642871fd1ba857c1 *R/paco_ss.R
 dc82d1ecbb39abcac7396d1bc8d88314 *R/paraF.R
-d299b63096e4bc715e3289b31c0209fc *R/prob_statistic.R
+656d979262ac380a789b6b4a7908d6ff *R/prob_statistic.R
 d255b7696ef9cd6c3f205efdb607a362 *R/tangle_gram.R
 20d7ca8eb3388ace73293534b1a10d37 *R/trimHS_maxC.R
 2ed87b232e3b6ceb52ca40ef0b0bbc1b *R/trimHS_maxI.R
@@ -33,7 +33,7 @@ cb24dff076d6eeccd82b916d5e81fdab *man/max_incong.Rd
 2b7ceee137cfcf6c0a5c42668d8ef3bd *man/one2one_f.Rd
 8fc1ba0365cf3502a79b2b9aced3cbbf *man/paco_ss.Rd
 b2f70fc75f76f2adb9afe4246ab946d4 *man/paraF.Rd
-a635fd4239c0718e34ba5bb2dc840761 *man/prob_statistic.Rd
+3fff6bdc6414a86e07ee633c6e298c34 *man/prob_statistic.Rd
 fd793424ccbaa04cecff1cdd48dfa518 *man/tangle_gram.Rd
 5affeaee0adba4dcb61eedd51e7e1394 *man/trimHS_maxC.Rd
 2fc87b6c89b81a04bd903291ce6e0ab3 *man/trimHS_maxI.Rd
