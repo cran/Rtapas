@@ -45,6 +45,7 @@
 #' @return A sum of squared residuals.
 #'
 #' @examples
+#' \donttest{
 #' data(amph_trem)
 #' N = 10 #for the example, we recommend 1e+4 value
 #' n = 8
@@ -52,6 +53,7 @@
 #' TAM <- trimHS_maxC(N, am_matrix, n, check.unique = TRUE)
 #' PACO <- paco_ss(TAM, amphipod, trematode, symmetric = TRUE,
 #'                 ei.correct = "sqrt.D", strat = "parallel", cl = 8)
+#' }
 #'
 #' @source
 #' Balbuena J.A., Perez-Escobar O.A., Llopis-Belenguer C., Blasco-Costa I.
@@ -79,8 +81,8 @@ paco_ss <- function (ths, treeH, treeS, symmetric = FALSE,
   pacoss <- function (ths, treeH, treeS, ...) {
   eigen.choice <- c("none", "lingoes", "cailliez", "sqrt.D")
   if (ei.correct %in% eigen.choice == FALSE)
-    stop(writeLines("Invalid eigenvalue correction parameter.\r
-               Correct choices are 'none', 'lingoes', 'cailliez' or 'sqrt.D'"))
+    stop("Invalid eigenvalue correction parameter.\r
+          Correct choices are 'none', 'lingoes', 'cailliez' or 'sqrt.D'")
   treeh <- ape::drop.tip(treeH, setdiff(treeH$tip.label, rownames(ths)))
   trees <- ape::drop.tip(treeS, setdiff(treeS$tip.label, colnames(ths)))
   # Reorder ths as per tree labels:
@@ -100,7 +102,7 @@ paco_ss <- function (ths, treeH, treeS, symmetric = FALSE,
 
   strat.choice <- c("sequential", "parallel")
   if (strat %in% strat.choice == FALSE)
-    stop(writeLines("Invalid strategy parameter"))
+    stop("Invalid strategy parameter")
 
   if (strat == "sequential") {
     paco <- sapply(ths, pacoss, treeH, treeS, symmetric = symmetric,

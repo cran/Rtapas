@@ -38,12 +38,14 @@
 #' @return Geodesic distance
 #'
 #' @examples
+#' \donttest{
 #' data(amph_trem)
 #' N = 10 #for the example, we recommend 1e+4 value
 #' n = 8
 #'
 #' TAM <- trimHS_maxC(N, am_matrix, n, check.unique = TRUE)
 #' GD <- geo_D(TAM, amphipod, trematode, strat = "sequential", cl = 1)
+#' }
 #'
 #' @source
 #' Balbuena J.A., Perez-Escobar O.A., Llopis-Belenguer C., Blasco-Costa I.
@@ -88,7 +90,7 @@ geo_D <- function(ths, treeH, treeS,
 
   strat.choice <- c("sequential", "parallel")
   if (strat %in% strat.choice == FALSE)
-    stop(writeLines("Invalid strategy parameter"))
+    stop("Invalid strategy parameter")
 
   if (strat == "sequential") {
     gd_f <- sapply(ths, geoD, treeH = treeH, treeS = treeS)

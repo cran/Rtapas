@@ -29,11 +29,12 @@
 #' @return A list of the N trimmed matrices.
 #'
 #' @examples
+#' \donttest{
 #' data(nuc_cp)
 #' N = 10  #for the example, we recommend 1e+4 value
 #' n = 15
 #' TNC <- trimHS_maxC(N, np_matrix, n, check.unique = TRUE)
-#'
+#' }
 #'
 #' @import parallel
 #'
@@ -59,7 +60,7 @@ trimHS_maxC <- function (N, HS, n, check.unique = TRUE,
 
   strat.choice <- c("sequential", "parallel")
   if (strat %in% strat.choice == FALSE)
-    stop(writeLines("Invalid strategy parameter"))
+    stop("Invalid strategy parameter")
 
   if (strat == "sequential") {
     trim.HS <- lapply(1:N, trim.int, HS = HS, n = n)

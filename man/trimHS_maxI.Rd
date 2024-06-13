@@ -4,7 +4,7 @@
 \alias{trimHS_maxI}
 \title{Trims the H-S association matrix maximizing the incongruence}
 \usage{
-trimHS_maxI(N, HS, n, check.unique = TRUE)
+trimHS_maxI(N, HS, n, check.unique = TRUE, strat = "sequential", cl = 1)
 }
 \arguments{
 \item{N}{Number of runs.}
@@ -17,6 +17,17 @@ trimHS_maxI(N, HS, n, check.unique = TRUE)
 alternative is recommended if \code{n} is small, because the
 probability of obtaining the same trimmed matrix in different runs
 increases as \code{n} decreases.}
+
+\item{strat}{Flag indicating whether execution is to be  \code{"sequential"}
+or \code{"parallel"}. Default is \code{"sequential"},
+resolves \R expressions sequentially in the current \R
+process. If \code{"parallel"} resolves \R expressions in parallel in
+separate \R sessions running in the background.}
+
+\item{cl}{Number of cluster to be used for parallel computing.
+\code{\link[parallelly:availableCores]{parallelly::availableCores()}}
+returns the number of clusters available.
+Default is \code{cl = 1} resulting in \code{"sequential"} execution.}
 }
 \value{
 A list of the N trimmed matrices.
@@ -27,9 +38,11 @@ association matrix to include them, allowing both single and multiple
 associations.
 }
 \examples{
+\donttest{
 data(nuc_cp)
 N = 10  #for the example, we recommend 1e+4 value
 n = 15
 TNC <- trimHS_maxI(N, np_matrix, n, check.unique = TRUE)
+}
 
 }

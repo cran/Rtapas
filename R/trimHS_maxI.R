@@ -15,19 +15,33 @@
 #'        probability of obtaining the same trimmed matrix in different runs
 #'        increases as \code{n} decreases.
 #'
+#' @param strat Flag indicating whether execution is to be  \code{"sequential"}
+#'        or \code{"parallel"}. Default is \code{"sequential"},
+#'        resolves \R expressions sequentially in the current \R
+#'        process. If \code{"parallel"} resolves \R expressions in parallel in
+#'        separate \R sessions running in the background.
+#'
+#' @param cl Number of cluster to be used for parallel computing.
+#'        \code{\link[parallelly:availableCores]{parallelly::availableCores()}}
+#'        returns the number of clusters available.
+#'        Default is \code{cl = 1} resulting in \code{"sequential"} execution.
+#'
 #' @return A list of the N trimmed matrices.
 #'
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' data(nuc_cp)
 #' N = 10  #for the example, we recommend 1e+4 value
 #' n = 15
 #' TNC <- trimHS_maxI(N, np_matrix, n, check.unique = TRUE)
+#' }
 #'
-trimHS_maxI <- function (N, HS, n, check.unique = TRUE) {
+trimHS_maxI <- function (N, HS, n, check.unique = TRUE,
+                         strat = "sequential", cl = 1) {
 
-  trim.intI <- function (HS, n) {
+  trim.intI <- function (x, HS, n) {
     HS.LUT <- which(HS == 1, arr.ind = TRUE)
     HS.LUT <- cbind(HS.LUT, 1:nrow(HS.LUT))
     LH <- LS <- 2
@@ -45,8 +59,31 @@ trimHS_maxI <- function (N, HS, n, check.unique = TRUE) {
     return(hs)
   }
 
-  trimI.HS <- replicate(N, trim.intI(HS = HS, n = n), simplify = FALSE)
-  if (check.unique == TRUE) trimI.HS <- unique(trimI.HS)
-  trimI.HS[sapply(trimI.HS, is.null)] <- NULL
+  strat.choice <- c("sequential", "parallel")
+  if (strat %in% strat.choice == FALSE)
+    stop("Invalid strategy parameter")
+
+  if (strat == "sequential") {
+    trimI.HS <- lapply(1:N, trim.intI, HS = HS, n = n)
+    if (check.unique == TRUE) trimI.HS <- unique(trimI.HS)
+    if (length(trimI.HS) < N)
+      warning("No. of trimmed H-S assoc. matrices < No. of runs")
+    trimI.HS[sapply(trimI.HS, is.null)] <- NULL
+
+  } else {
+    cores <- parallelly::makeClusterPSOCK(workers = cl)
+    trimI.HS <- parallel::parLapply(cores, 1:N, trim.intI, HS = HS, n = n)
+    parallel::stopCluster(cores)
+    if (check.unique == TRUE) trimI.HS <- unique(trimI.HS)
+    if (length(trimI.HS) < N)
+      warning("No. of trimmed H-S assoc. matrices < No. of runs")
+    trimI.HS[sapply(trimI.HS, is.null)] <- NULL
+  }
+  dims <- function(x){all(dim(x)) == 0}
+  which_null <- sapply(trimI.HS, dims)
+  if (length(which(which_null == TRUE)) > 1) {
+    trimI.HS <- trimI.HS[-which(which_null == TRUE)]
+    }
   return(trimI.HS)
 }
+

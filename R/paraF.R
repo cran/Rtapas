@@ -45,21 +45,23 @@
 #' to the Cophylogenetic Gordian Knot. Systematic Biology. 69:1212–1230.
 #'
 #'
-#'
 #' @import parallel
 #' @importFrom parallelly makeClusterPSOCK
 #'
 #'
-#' @export
-#'
 #' @examples
+#' \donttest{
 #' data(amph_trem)
 #' N = 10 #for the example, we recommend 1e+4 value
 #' n = 8
 #'
 #' TAM <- trimHS_maxC(N, am_matrix, n, check.unique = TRUE)
 #' PF <- paraF(TAM, amphipod, trematode, ei.correct = "sqrt.D",
-#'             strat = "parallel", cl = 8)
+#'            strat = "parallel", cl = 8)
+#' }
+#'
+#'
+#' @export
 #'
 paraF <- function (ths, treeH, treeS, ei.correct = "none",
                      strat = "sequential", cl = 1) {
@@ -68,8 +70,8 @@ paraF <- function (ths, treeH, treeS, ei.correct = "none",
 
     eigen.choice <- c("none", "lingoes", "cailliez", "sqrt.D")
     if (ei.correct %in% eigen.choice == FALSE)
-      stop(writeLines("Invalid eigenvalue correction parameter.\r
-               Correct choices are 'none', 'lingoes', 'cailliez' or 'sqrt.D'"))
+      stop("Invalid eigenvalue correction parameter.\r
+            Correct choices are 'none', 'lingoes', 'cailliez' or 'sqrt.D'")
 
     treeh <- ape::drop.tip(treeH, setdiff(treeH$tip.label, rownames(ths)))
     trees <- ape::drop.tip(treeS, setdiff(treeS$tip.label, colnames(ths)))
@@ -87,7 +89,7 @@ paraF <- function (ths, treeH, treeS, ei.correct = "none",
 
   strat.choice <- c("sequential", "parallel")
   if(strat %in% strat.choice == FALSE)
-    stop(writeLines("Invalid strategy parameter"))
+    stop("Invalid strategy parameter")
 
   if(strat == "sequential") {
     pfit <- sapply(ths, paraf, treeH, treeS, ei.correct = ei.correct)

@@ -9,14 +9,16 @@
 #' @return An association binary matrix, with hosts in rows and symbionts in
 #'         columns, sorted alphabetically.
 #'
-#' @export
-#'
 #' @examples
+#' \donttest{
 #' data(nuc_cp)
 #' NTaxa <- sort(NUCtr$tip.label)
 #' CPTaxa <- sort(CPtr$tip.label)
 #'
 #' NC <- assoc_mat(data.frame(NTaxa, CPTaxa))
+#' }
+#'
+#' @export
 #'
 assoc_mat <- function(hs) {
   host <- hs[,1]

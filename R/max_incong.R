@@ -34,7 +34,7 @@
 #'        and Cailliez corrections, respectively.
 #'
 #' @param percentile Percentile to evaluate (\emph{p}). Default is
-#'        \code{0.99} (99\%).
+#'        \code{0.99} (99\\%).
 #'
 #' @param diff.fq Determines whether a correction to detect those associations
 #'        that present a similar contribution to (in)congruence and occur with
@@ -78,12 +78,11 @@
 #'
 #' @examples
 #' data(nuc_pc)
-#' N = 10 #for the example, we recommend 1e+4 value
+#' N = 1 #for the example, we recommend 1e+4 value
 #' n = 15
 #' NPi <- max_incong(np_matrix, NUCtr, CPtr, n, N, method = "paco",
 #'                   symmetric = FALSE, ei.correct = "sqrt.D",
-#'                   percentile = 0.99, diff.fq = TRUE,
-#'                   strat = "parallel", cl = 10)
+#'                   percentile = 0.99, diff.fq = TRUE)
 #'
 #'
 max_incong <- function (HS, treeH, treeS, n, N, method = "paco",
@@ -91,11 +90,12 @@ max_incong <- function (HS, treeH, treeS, n, N, method = "paco",
                         percentile = 0.99, diff.fq = FALSE,
                         strat = "sequential", cl = 1) {
 
-  THSi <- trimHS_maxI(N = N, n = n, HS = HS, check.unique = TRUE)
+  THSi <- trimHS_maxI(N = N, n = n, HS = HS, check.unique = TRUE,
+                      strat = strat, cl = cl)
   method.choice <- c("geoD", "paco", "paraF")
   if (method %in% method.choice == FALSE)
-    stop(writeLines("Invalid global-fit method.
-                    Correct choices are 'geoD', 'paco' or 'parafit'"))
+    stop("Invalid global-fit method.
+          Correct choices are 'geoD', 'paco' or 'parafit'")
 
   if (method == "geoD") {
     if(sum(HS) == ncol(HS)){

@@ -32,7 +32,7 @@
 #'          negative values are produced due to corrected frequencies
 #'          (if \code{res.fq = TRUE} or
 #'          \code{diff.fq = TRUE}). For more details see
-#'          \code{\link[GiniWegNeg:Gini_RSV]{Gini_RSV()}}.
+#'          Raffinetti et al. (2015).
 #'
 #' @references
 #' Ultsch A., Lötsch J. (2017). A data science based standardized Gini index
@@ -43,30 +43,24 @@
 #' normalization when attributes with negative values are considered.
 #' Stat Methods Appl. 24:507–521. \doi{10.1007/s10260-014-0293-4}
 #'
-#'
-#'
-#'
-#' @importFrom GiniWegNeg Gini_RSV
 #' @importFrom graphics boxplot text
 #' @export
 #'
 #' @examples
 #' data(nuc_cp)
-#' N = 10 #for the example, we recommend 1e+4 value
+#' N = 1 #for the example, we recommend 1e+4 value
 #' n = 15
 #' # Maximizing congruence
 #' NPc_PACo <- max_cong(np_matrix, NUCtr, CPtr, n, N, method = "paco",
 #'                 symmetric = FALSE, ei.correct = "sqrt.D",
-#'                 percentile = 0.01, res.fq = FALSE,
-#'                 strat = "parallel", cl = 8)
+#'                 percentile = 0.01, res.fq = FALSE)
 #'
 #' # Loaded directly from dataset
 #' # THSC <- trimHS_maxC(N, np_matrix, n)
 #' # pp_treesPACo_cong <- prob_statistic(ths = THSc, np_matrix, NUC_500tr[1:10],
 #' #                         CP_500tr[1:10], freqfun = "paco", NPc_PACo,
 #' #                         symmetric = FALSE, ei.correct = "sqrt.D",
-#' #                         percentile = 0.01, correction = "none",
-#' #                         strat = "parallel", cl = 8)
+#' #                         percentile = 0.01, correction = "none")
 #'
 #' gini_ci(LF_1 = NPc_PACo, M01 = pp_treesPACo_cong,
 #'          ylab = "Gini Coefficient (G)",
@@ -76,8 +70,8 @@
 gini_ci <- function (LF_1, M01,
                      ylab = "Gini coefficient", plot = TRUE, ...){
 
-  Gini01 <- unlist(Gini_RSV( LF_1[, ncol(LF_1)]))
-  GiniM01 <- unlist(apply(M01, 1, Gini_RSV))
+  Gini01 <- unlist(gini_RSV( LF_1[, ncol(LF_1)]))
+  GiniM01 <- unlist(apply(M01, 1, gini_RSV))
 
   if(plot == TRUE){
     box <- boxplot(GiniM01, show.names = TRUE, ylab = ylab, ...)

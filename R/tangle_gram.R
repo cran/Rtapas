@@ -87,8 +87,8 @@ tangle_gram <- function (treeH, treeS, HS, fqtab, colscale = "diverging",
 
   colscale.choice <- c("diverging", "sequential")
   if (colscale %in% colscale.choice == FALSE)
-    stop(writeLines("Invalid colscale parameter.\r\n
-                    Correct choices are 'diverging' and 'sequential'"))
+    stop("Invalid colscale parameter.\r\n
+         Correct choices are 'diverging' and 'sequential'")
   colscale.range <- function(x) {
     rescale.range <- function(x) {
       xsq <- round(x)

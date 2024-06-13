@@ -26,7 +26,7 @@
 #'         ParaFit.
 #'
 #' @param percentile Percentile to evaluate (\emph{p}). Default is
-#'        \code{0.01} (1\%).
+#'        \code{0.01} (1\\%).
 #'
 #' @param correction Correction to be assumed. The default value is
 #'        \code{"none"}. If \code{= "res.fq"}, a residual frequency value
@@ -72,37 +72,37 @@
 #'
 #' @return A matrix with the value of the statistics for each of the
 #'         probability trees.
-#' @export
 #'
 #' @examples
-#' data(nuc_pc)
+#' \donttest{
+#' data("nuc_cp")
 #' N = 10 #for the example, we recommend 1e+4 value
 #' n = 15
 #' # Maximizing congruence (not run)
-#' # NPc <- max_cong(np_matrix, NUCtr, CPtr, n, N, method = "paco",
-#' #                 symmetric = FALSE, ei.correct = "sqrt.D",
-#' #                 percentile = 0.01, correction = "none",
-#' #                 strat = "parallel", cl = 8)
-#' # THSc <- trimHS_maxC(N, np_matrix, n)
-#' # pp_treesPACOo_cong <- prob_statistic(THSc, np_matrix, NUC_500tr[1:10],
-#' #                          CP_500tr[1:10], freqfun = "paco", NPc,
-#' #                          percentile = 0.01, correction = "none",
-#' #                          algm = "maxcong", symmetric = FALSE,
-#' #                          ei.correct = "sqrt.D",
-#' #                          strat = "parallel", cl = 8)
+#' NPc <- max_cong(np_matrix, NUCtr, CPtr, n, N, method = "paco",
+#'                 symmetric = FALSE, ei.correct = "sqrt.D",
+#'                 percentile = 0.01, strat = "parallel", cl = 8)
+#' THSc <- trimHS_maxC(N, np_matrix, n)
+#' pp_treesPACOo_cong <- prob_statistic(THSc, np_matrix, NUC_500tr[1:10],
+#'                          CP_500tr[1:10], freqfun = "paco", NPc,
+#'                          percentile = 0.01, correction = "none",
+#'                          algm = "maxcong", symmetric = FALSE,
+#'                          ei.correct = "sqrt.D",
+#'                          strat = "parallel", cl = 8)
 #'
 #' # Maximizing incongruence
 #' NPi <- max_incong(np_matrix, NUCtr, CPtr, n, N, method = "paco",
 #'                   symmetric = FALSE, ei.correct = "sqrt.D",
-#'                   percentile = 0.99, diff.fq = TRUE,
-#'                   strat = "parallel", cl = 8)
+#'                   percentile = 0.99, diff.fq = TRUE)
 #' THSi <- trimHS_maxI(N, np_matrix, n)
 #' pp_treesPACOo_incong <- prob_statistic(THSi, np_matrix, NUC_500tr[1:5],
-#'                         CP_500tr[1:5], freqfun = "paco", NPi,
-#'                         percentile = 0.99, correction = "diff.fq",
-#'                         symmetric = FALSE, ei.correct = "sqrt.D",
-#'                         strat = "parallel", cl = 8)
+#'                                  CP_500tr[1:5], freqfun = "paco", NPi,
+#'                                  percentile = 0.99, correction = "diff.fq",
+#'                                  symmetric = FALSE, ei.correct = "sqrt.D",
+#'                                  strat = "parallel", cl = 8)
+#' }
 #'
+#' @export
 #'
 prob_statistic <- function (ths, HS, mTreeH, mTreeS, freqfun = "paco", fx,
                        percentile = 0.01, correction = "none",
@@ -112,17 +112,17 @@ prob_statistic <- function (ths, HS, mTreeH, mTreeS, freqfun = "paco", fx,
 
   strat.choice <- c("sequential", "parallel")
   if (strat %in% strat.choice == FALSE)
-    stop(writeLines("Invalid strategy parameter"))
+    stop("Invalid strategy parameter")
 
   freqfun.choice <- c("geoD", "paco", "paraF")
   if(freqfun %in% freqfun.choice == FALSE)
-    stop(writeLines("Invalid freqfun parameter.
-    Correct choices are 'geoD','paco' or 'paraF'"))
+    stop("Invalid freqfun parameter. Correct choices are
+         'geoD','paco' or 'paraF'")
 
   corr.choice <- c("none", "res.fq", "diff.fq")
   if(correction %in% corr.choice == FALSE)
-    stop(writeLines("Invalid correction parameter.
-    Correct choices are 'none', 'res.fq' or 'diff.fq'"))
+    stop("Invalid correction parameter. Correct choices are
+         'none', 'res.fq' or 'diff.fq'")
 
   if(correction == "none"){
     res.fq = FALSE
@@ -130,8 +130,8 @@ prob_statistic <- function (ths, HS, mTreeH, mTreeS, freqfun = "paco", fx,
 
     algm.choice <- c("maxcong", "maxincong")
     if(algm %in% algm.choice == FALSE)
-      stop(writeLines("Invalid algorithm parameter.
-      Correct choices are 'maxcong' or 'maxincong'"))
+      stop("Invalid algorithm parameter. Correct choices are
+           'maxcong' or 'maxincong'")
 
     if (algm == "maxcong"){
       below.p = TRUE
@@ -204,8 +204,8 @@ prob_statistic <- function (ths, HS, mTreeH, mTreeS, freqfun = "paco", fx,
             pacoss <- function (ths, treeH, treeS, ...) {
               eigen.choice <- c("none", "lingoes", "cailliez", "sqrt.D")
               if (ei.correct %in% eigen.choice == FALSE)
-                stop(writeLines("Invalid eigenvalue correction parameter.\r
-               Correct choices are 'none', 'lingoes', 'cailliez' or 'sqrt.D'"))
+                stop("Invalid eigenvalue correction parameter.\r
+               Correct choices are 'none', 'lingoes', 'cailliez' or 'sqrt.D'")
               treeh <- ape::drop.tip(treeH, setdiff(treeH$tip.label, rownames(ths)))
               trees <- ape::drop.tip(treeS, setdiff(treeS$tip.label, colnames(ths)))
               # Reorder ths as per tree labels:
@@ -262,8 +262,8 @@ prob_statistic <- function (ths, HS, mTreeH, mTreeS, freqfun = "paco", fx,
           paraf <- function (ths, treeH, treeS, ...) {
             eigen.choice <- c("none", "lingoes", "cailliez", "sqrt.D")
             if (ei.correct %in% eigen.choice == FALSE)
-              stop(writeLines("Invalid eigenvalue correction parameter.\r
-               Correct choices are 'none', 'lingoes', 'cailliez' or 'sqrt.D'"))
+              stop("Invalid eigenvalue correction parameter.\r
+               Correct choices are 'none', 'lingoes', 'cailliez' or 'sqrt.D'")
             treeh <- ape::drop.tip(treeH, setdiff(treeH$tip.label, rownames(ths)))
             trees <- ape::drop.tip(treeS, setdiff(treeS$tip.label, colnames(ths)))
             if (is.null(treeh)==TRUE | is.null(trees)==TRUE) PF <- NA else {
